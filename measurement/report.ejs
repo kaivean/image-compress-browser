@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>报告-浏览器图片压缩测试</title>
+    <meta name="viewport" content="width=device-width,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no">
+    <link rel="stylesheet" href="http://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <style>
+    button {
+        margin: 10px;
+    }
+    </style>
+    <script src="https://cdn.bootcss.com/zepto/1.2.0/zepto.min.js"></script>
+    <script src="/dist/compressImage.js"></script>
+</head>
+<body>
+    <h3>浏览器图片压缩-测试数据表格</h3>
+    <h5>为表明单位的默认都是 ms</h5>
+    <table class="table table-bordered table-hover">
+        <thead>
+            <tr>
+                <td >系统</td>
+                <td >机型环境</td>
+                <td >类型</td>
+                <td >图片</td>
+                <td >结果页</td>
+                <td >方位</td>
+                <td >File转换</td>
+                <td >转换成Image</td>
+                <td >获取方位耗时</td>
+                <td >Canvas绘制</td>
+                <td >Canvas旋转(通过方位)</td>
+                <td >Canvas输出</td>
+                <td >压缩模块耗时</td>
+                <td >上传</td>
+                <td >总耗时（压缩上传）</td>
+                <td >原始宽度</td>
+                <td >原始高度</td>
+                <td >新宽度</td>
+                <td >新高度</td>
+                <td >等比缩小</td>
+                <td >原始大小</td>
+                <td >新大小</td>
+                <td >差值</td>
+                <td >减少百分</td>
+            </tr>
+        </thead>
+        <tbody>
+            <% list.forEach(function(item){ %>
+            <tr class="<%= item.os == 'ios' ? 'success' : 'info' %>">
+                <td><%= item.os %></td>
+                <td><%= item.phone %></td>
+                <td><%= item.type %></td>
+                <td><%= item.name %></td>
+                <td><a href="<%= item.url %>" target="_blank">结果页</a></td>
+                <td><%= item.orientation %></td>
+                <td><%= item.fileTo %></td>
+                <td><%= item.toImg %></td>
+
+                <td class="danger"><%= item.orient %></td>
+                <td><%= item.toCanvas %></td>
+                <td><%= item.rotate %></td>
+                <td class="danger"><%= item.canvasOut %></td>
+                <td  class="danger"><%= +item.total - (+item.upload) %></td>
+                <td><%= item.upload %></td>
+                <td><%= item.total %></td>
+
+                <td><%= item.oriWidth %></td>
+                <td><%= item.oriHeight %></td>
+                <td><%= item.newWidth %></td>
+                <td><%= item.newHeight  %></td>
+                <td class="danger"><%= parseInt((item.oriWidth - item.newWidth) / item.oriWidth * 100, 10) %>%</td>
+                <td><%= parseInt((item.oriSize) / 1000)  %>kb</td>
+                <td><%= parseInt((item.newSize) / 1000)  %>kb</td>
+                <td><%= parseInt((item.oriSize - item.newSize) / 1000) %>kb</td>
+                <td class="danger"><%= parseInt((item.oriSize - item.newSize) / item.oriSize * 100) %>%</td>
+            </tr>
+            <% }) %>
+        </tbody>
+
+    <table>
+
+
+
+    <script>
+
+
+    </script>
+</body>
+</html>

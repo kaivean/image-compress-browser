@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>浏览器图片压缩测试</title>
+    <meta name="viewport" content="width=device-width,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no">
+    <link rel="stylesheet" href="http://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <style>
+    button {
+        margin: 10px;
+    }
+    </style>
+    <script src="https://cdn.bootcss.com/zepto/1.2.0/zepto.min.js"></script>
+    <script src="/dist/compressImage.js"></script>
+</head>
+<body>
+    <h3>第一步：选择文件</h3>
+    <input type="file" id="file" />
+
+    <h3>第二步：选择压缩方式</h3>
+    <button  class="btn btn-default" data-type='compressOrientDataurl' >压缩，自定义获取方位，输出DataUrl</button>
+    <button  class="btn btn-success" data-type='compressOrientBlob' >压缩，自定义获取方位，输出Blob</button>
+    <button  class="btn btn-primary" data-type='compressExifDataurl' >压缩，Exif获取方位，输出DataUrl</button>
+    <button  class="btn btn-info" data-type='compressExifBlob' >压缩，Exif获取方位，输出Blob</button>
+    <button  class="btn btn-warning" data-type='compressNo' >不压缩</button>
+
+    <h3>提示：</h3>
+    <div id="click" class="bg-info" ></div>
+    <div id="status" class="bg-primary" ></div>
+    <div id="other" class="bg-success" ></div>
+
+
+    <a  class="btn btn-success" href='/report'>报告</a>
+    <script>
+    window.statData = {
+        os: navigator.userAgent.indexOf('iPhone OS') > -1 ? 'ios': 'android',
+        phone: '浏览器',
+        upload: 0,
+
+        fileTo: 0,
+        toImg: 0,
+        orient: 0,
+        toCanvas: 0,
+        rotate: 0,
+        canvasOut: 0,
+        total: 0
+    };
+
+
+    function compressAndUploadImg(file, callback) {
+        statData.name = file.name;
+        statData.total = performance.now();
+        compressImage(file, function (base64OrFile, width, height) {
+            statData.upload = performance.now();
+
+            console.log('base64OrFile', base64OrFile);
+
+            var formData = new FormData();
+            formData.append('tn', 'wise');
+            formData.append('image', base64OrFile);
+
+            var params = {
+                url: 'https://graph.baidu.com/upload',
+                type: 'POST',
+                timeout: 10000, // 10s
+                data: formData,
+                processData: false,
+                contentType: false,
+                cache: false,
+                success: function (res) {
+                    statData.upload = performance.now() - statData.upload;
+                    statData.total = performance.now() - statData.total;
+
+                    statData.url = '';
+                    if (!res.status) {
+                        statData.url = res.data.url;
+                    }
+
+                    callback(res);
+                },
+                error: function (xhr, errorType) {
+                    statData.upload = performance.now() - statData.upload;
+                    statData.total = performance.now() - statData.total;
+                    callback({
+                        status: 1,
+                        info: 'ajaxerror,' + errorType
+                    });
+                }
+            };
+
+            $.ajax(params);
+        });
+    }
+
+    $('button').on('click', function () {
+        statData.type = $(this).data('type');
+        var file = $('#file')[0].files[0];
+        console.log('file', file);
+
+        $('#click').text('当前选择压缩方式：' + $(this).text());
+        $('#status').html('上传中...');
+        var t = Date.now();
+        compressAndUploadImg(file,function (res) {
+            $('#status').html(
+                '返回状态：' + res.status ? '上传成功' : '上传失败'
+                + '<br/> 耗时: ' + (Date.now()-t)
+                + '<br/> 返回结果页:' + JSON.stringify(res)
+            );
+
+            // 发送统计日志
+            var querys = [];
+            for (var key in statData) {
+                var val = statData[key];
+                if (val.toString().indexOf('.') > -1) {
+                    try {
+                        val = val.toFixed(2);
+                    }
+                    catch(e) {
+
+                    }
+                }
+                querys.push(key + '=' + val);
+            }
+            (new Image()).src = '/log?' + querys.join('&');
+        });
+
+        return false;
+    });
+
+    </script>
+</body>
+</html>
