@@ -1,0 +1,11 @@
+output
+dist
+._.DS_Store
+.DS_Store
+node_modules
+npm-debug.log
+mock
+src/test.js
+.idea
+_book
+nohup.out

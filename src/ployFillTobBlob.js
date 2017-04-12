@@ -1,5 +1,5 @@
 /**
- * @file 处理任务
+ * @file 兼容toBlob
  * @author kaivean(kaisey2012@163.com)
  */
 
@@ -117,5 +117,4 @@ function ployFillTobBlob() {
     }(window))
 }
 
-module.exports = ployFillTobBlob;
- // return ployFillTobBlob;
+export default ployFillTobBlob;

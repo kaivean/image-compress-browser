@@ -1,13 +1,11 @@
 /**
- * @file 工具函数
+ * @file 获取方位
  * @author kaivean(kaisey2012@163.com)
  */
 
-var exif = require('./exif');
-
 function getStringFromDB(buffer, start, length) {
     var outstr = "";
-    for (n = start; n < start+length; n++) {
+    for (var n = start; n < start+length; n++) {
         outstr += String.fromCharCode(buffer.getUint8(n));
     }
     return outstr;
@@ -43,18 +41,14 @@ function readOrientation(dataView, e1Offset) {
 
     var entryOffset;
 
-    console.log('entryNum', entrieNum);
     for (var i = 0; i < entrieNum; i++) {
         entryOffset = entryNumOffset + 2 + i * 12;
-        console.log('entry' + i, dataView.getUint8(entryOffset, !bigEnd).toString(16).toUpperCase(),dataView.getUint8(entryOffset+1, !bigEnd).toString(16).toUpperCase());
-
         var sign = dataView.getUint16(entryOffset, !bigEnd);
         if (sign == 0x0112) {
             var type = dataView.getUint16(entryOffset + 2, !bigEnd);
             var numValues = dataView.getUint32(entryOffset + 4, !bigEnd);
             var valueOffset = dataView.getUint32(entryOffset + 8, !bigEnd) + tiffOffset;
             if (type === 3 && numValues === 1) {
-                console.log('Orientation', dataView.getUint16(entryOffset + 8, !bigEnd));
                 return dataView.getUint16(entryOffset + 8, !bigEnd);
             }
         }
@@ -95,28 +89,11 @@ function getFromFileBuffer(fileBuffer) {
 
 function getOrientation(file, callback) {
     var fileReader = new FileReader();
-
     fileReader.onload = function(e) {
-        if (statData.type.indexOf('Orient') > -1) {
-            statData.orient = performance.now();
-            var Orientation = getFromFileBuffer(e.target.result);
-            statData.orient = performance.now() - statData.orient;
-
-            $('#other').html('get Orientation by 自己计算： ' + Orientation);
-            callback(Orientation);
-        }
-        else {
-            statData.orient = performance.now();
-            var data = exif.readFromBinaryFile(e.target.result);
-            statData.orient = performance.now() - statData.orient;
-
-            $('#other').html('get Orientation by exif ' + data['Orientation']);
-            callback(data['Orientation']);
-        }
+        var Orientation = getFromFileBuffer(e.target.result);
+        callback(Orientation);
     };
-
     fileReader.readAsArrayBuffer(file);
 }
 
-module.exports = getOrientation;
- // return getOrientation;
+export default getOrientation;

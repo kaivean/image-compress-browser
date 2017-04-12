@@ -9,13 +9,198 @@
     button {
         margin: 10px;
     }
+
+    h3  {
+        margin-top: 80px;
+        border-top: 2px solid #ddd;
+        line-height: 30px;
+    }
     </style>
     <script src="https://cdn.bootcss.com/zepto/1.2.0/zepto.min.js"></script>
+    <script src="https://cdn.bootcss.com/echarts/3.5.0/echarts.min.js"></script>
     <script src="/dist/compressImage.js"></script>
 </head>
 <body>
-    <h3>浏览器图片压缩-测试数据表格</h3>
+<% if (query.log == 'main') { %>
+    <h3>浏览器图片压缩-不同压缩方式对比图</h3>
+    <!-- 为 ECharts 准备一个具备大小（宽高）的 DOM -->
+    <div id="main" style="width: 800px;height:400px;"></div>
+    <script type="text/javascript">
+        // 基于准备好的dom，初始化echarts实例
+        var myChart = echarts.init(document.getElementById('main'));
+
+        // 指定图表的配置项和数据
+        var option = {
+            title: {
+                text: '不同压缩方式对比'
+            },
+            tooltip: {},
+            legend: {
+                data:['耗时']
+            },
+            xAxis: {
+                data: JSON.parse('<%- JSON.stringify(osTypeListConvertData.type) %>')
+            },
+            yAxis: {},
+            series: [
+                {
+                    name: '方式',
+                    type: 'bar',
+                    data: JSON.parse('<%- JSON.stringify(osTypeListConvertData.total) %>')
+                }
+            ]
+        };
+
+        // 使用刚指定的配置项和数据显示图表。
+        myChart.setOption(option);
+    </script>
+
+
+    <!-- 为 ECharts 准备一个具备大小（宽高）的 DOM -->
+    <div id="main1" style="width: 800px;height:400px;"></div>
+    <script type="text/javascript">
+        // 基于准备好的dom，初始化echarts实例
+        var myChart = echarts.init(document.getElementById('main1'));
+
+        // 指定图表的配置项和数据
+        var option = {
+            title: {
+                text: '不同压缩方式对比（Ios）'
+            },
+            tooltip: {},
+            legend: {
+                data:['耗时']
+            },
+            xAxis: {
+                data: JSON.parse('<%- JSON.stringify(osTypePhoneListConvertData.ios.type) %>')
+            },
+            yAxis: {},
+            series: [
+                {
+                    name: '方式',
+                    type: 'bar',
+                    data: JSON.parse('<%- JSON.stringify(osTypePhoneListConvertData.ios.total) %>')
+                }
+            ]
+        };
+
+        // 使用刚指定的配置项和数据显示图表。
+        myChart.setOption(option);
+    </script>
+
+    <!-- 为 ECharts 准备一个具备大小（宽高）的 DOM -->
+    <div id="main2" style="width: 800px;height:400px;"></div>
+    <script type="text/javascript">
+        // 基于准备好的dom，初始化echarts实例
+        var myChart = echarts.init(document.getElementById('main2'));
+
+        // 指定图表的配置项和数据
+        var option = {
+            title: {
+                text: '不同压缩方式对比（Android）'
+            },
+            tooltip: {},
+            legend: {
+                data:['耗时']
+            },
+            xAxis: {
+                data: JSON.parse('<%- JSON.stringify(osTypePhoneListConvertData.android.type) %>')
+            },
+            yAxis: {},
+            series: [
+                {
+                    name: '方式',
+                    type: 'bar',
+                    data: JSON.parse('<%- JSON.stringify(osTypePhoneListConvertData.android.total) %>')
+                }
+            ]
+        };
+
+        // 使用刚指定的配置项和数据显示图表。
+        myChart.setOption(option);
+    </script>
+
+    <h3>浏览器图片压缩-压缩过程</h3>
+    <table class="table table-bordered table-hover">
+        <tbody>
+            <tr class="">
+                <td class="danger">File转换</td>
+                <td>File对象转成URl，有两种URL，(1)DataURL 或者 (2)Blob Url</td>
+                <td></td>
+                <td></td>
+                <td></td>
+            </tr>
+            <tr class="">
+                <td></td>
+                <td class="danger">转换成Image</td>
+                <td>绘制Canvas需要用Image</td>
+                <td></td>
+                <td></td>
+            </tr>
+            <tr class="">
+                <td></td>
+                <td></td>
+                <td class="danger">获取方位</td>
+                <td></td>
+                <td></td>
+            </tr>
+            <tr class="">
+                <td></td>
+                <td></td>
+                <td></td>
+                <td class="danger">Canvas绘制</td>
+                <td>Canvas绘制包含：根据方位值旋转Canvas，以此纠正IOS图片显示不正问题</td>
+                <td></td>
+            </tr>
+            <tr class="">
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td class="danger">Canvas输出：(1)toBlob 或者 (2)toDataURL</td>
+                <td></td>
+            </tr>
+        </tbody>
+    </table>
+
+    <h3>浏览器图片压缩-不同压缩方式综合比较</h3>
     <h5>为表明单位的默认都是 ms</h5>
+    <p class="bg-primary">最优压缩方式：简版exif和Blob。 基于压缩性能、带宽、代码体积、后端识别压力 考量</p>
+    <table class="table table-bordered table-hover">
+        <thead>
+            <tr>
+                <td>方式</td>
+                <td >获取方位耗时</td>
+                <td >压缩模块耗时</td>
+                <td >上传</td>
+                <td >总耗时（压缩上传）</td>
+                <td >等比缩小</td>
+                <td >体积减少</td>
+                <td >减少百分</td>
+                <td >代码体积</td>
+            </tr>
+        </thead>
+        <tbody>
+            <% overallList.forEach(function(item){ %>
+            <tr class="<%= item.type == '不压缩' ? 'success' : '' %> <%= item.type == '简版exif和Blob' ? 'success' : '' %>">
+                <td><%= item.type %></td>
+                <td><%= item.orientation %></td>
+                <td ><%= item.type.indexOf('不压缩') > -1 ? '0' : (+item.total - (+item.upload)).toFixed(2) %></td>
+                <td><%= item.type.indexOf('不压缩') > -1 ? item.total : item.upload %></td>
+                <td><%= item.total %></td>
+                <td ><%= item.type.indexOf('不压缩') > -1 ? '0' : parseInt((item.oriWidth - item.newWidth) / item.oriWidth * 100, 10) %>%</td>
+                <td><%= item.type.indexOf('不压缩') > -1 ? '0' : parseInt((item.oriSize - item.newSize) / 1000) %>kb</td>
+                <td ><%= item.type.indexOf('不压缩') > -1 ? '0' : parseInt((item.oriSize - item.newSize) / item.oriSize * 100) %>%</td>
+                <td ><%= item.type.indexOf('简版exif') > -1 ? '5.6k' : item.type.indexOf('Exif') > -1 ? '19k' : '' %></td>
+            </tr>
+            <% }) %>
+        </tbody>
+    </table>
+<% } %>
+
+
+    <h3>浏览器图片压缩-测试数据表格</h3>
+    <h5>为表明单位的默认都是 ms ，前往 <a href="report?log=main">终极报告</a> </h5>
     <table class="table table-bordered table-hover">
         <thead>
             <tr>
@@ -46,7 +231,7 @@
             </tr>
         </thead>
         <tbody>
-            <% list.forEach(function(item){ %>
+            <% typeList.forEach(function(item){ %>
             <tr class="<%= item.os == 'ios' ? 'success' : 'info' %>">
                 <td><%= item.os %></td>
                 <td><%= item.phone %></td>
@@ -61,19 +246,19 @@
                 <td><%= item.toCanvas %></td>
                 <td><%= item.rotate %></td>
                 <td class="danger"><%= item.canvasOut %></td>
-                <td  class="danger"><%= +item.total - (+item.upload) %></td>
-                <td><%= item.upload %></td>
+                <td  class="danger"><%= item.type.indexOf('不压缩') > -1 ? '0' : (+item.total - (+item.upload)).toFixed(2) %></td>
+                <td><%= item.type.indexOf('不压缩') > -1 ? item.total : item.upload %></td>
                 <td><%= item.total %></td>
 
                 <td><%= item.oriWidth %></td>
                 <td><%= item.oriHeight %></td>
                 <td><%= item.newWidth %></td>
                 <td><%= item.newHeight  %></td>
-                <td class="danger"><%= parseInt((item.oriWidth - item.newWidth) / item.oriWidth * 100, 10) %>%</td>
+                <td class="danger"><%= item.type.indexOf('不压缩') > -1 ? '0' : parseInt((item.oriWidth - item.newWidth) / item.oriWidth * 100, 10) %>%</td>
                 <td><%= parseInt((item.oriSize) / 1000)  %>kb</td>
                 <td><%= parseInt((item.newSize) / 1000)  %>kb</td>
-                <td><%= parseInt((item.oriSize - item.newSize) / 1000) %>kb</td>
-                <td class="danger"><%= parseInt((item.oriSize - item.newSize) / item.oriSize * 100) %>%</td>
+                <td><%= item.type.indexOf('不压缩') > -1 ? '0' : parseInt((item.oriSize - item.newSize) / 1000) %>kb</td>
+                <td class="danger"><%= item.type.indexOf('不压缩') > -1 ? '0' : parseInt((item.oriSize - item.newSize) / item.oriSize * 100) %>%</td>
             </tr>
             <% }) %>
         </tbody>

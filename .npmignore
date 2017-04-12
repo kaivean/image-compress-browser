@@ -1,9 +1,0 @@
-mock/tmp/**
-demo
-node_modules
-.idea/
-npm-debug.log
-Thumbs.db
-.DS_Store
-*.swp
-test.sh

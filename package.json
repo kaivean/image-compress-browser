@@ -1,117 +1,43 @@
 {
-  "_args": [
-    [
-      {
-        "raw": "imgopti",
-        "scope": null,
-        "escapedName": "imgopti",
-        "name": "imgopti",
-        "rawSpec": "",
-        "spec": "latest",
-        "type": "tag"
-      },
-      "/root/project"
-    ]
-  ],
-  "_from": "imgopti@latest",
-  "_id": "imgopti@0.2.6",
-  "_inCache": true,
-  "_location": "/imgopti",
-  "_nodeVersion": "5.5.0",
-  "_npmOperationalInternal": {
-    "host": "packages-12-west.internal.npmjs.com",
-    "tmp": "tmp/imgopti-0.2.6.tgz_1469780257998_0.08344637253321707"
-  },
-  "scripts": {
-    "dev": "nodemon ./measurement/server.js --watch measurement",
-    "build": "nodemon --exec 'webpack'  --watch src"
-  },
-  "_npmUser": {
-    "name": "kaivean",
-    "email": "kaivean@outlook.com"
-  },
-  "_npmVersion": "3.5.3",
-  "_phantomChildren": {},
-  "_requested": {
-    "raw": "imgopti",
-    "scope": null,
-    "escapedName": "imgopti",
-    "name": "imgopti",
-    "rawSpec": "",
-    "spec": "latest",
-    "type": "tag"
-  },
-  "_requiredBy": [
-    "#USER"
-  ],
-  "_resolved": "https://registry.npmjs.org/imgopti/-/imgopti-0.2.6.tgz",
-  "_shasum": "8bf466090e819ea88f3942babc7b0817056703b8",
-  "_shrinkwrap": null,
-  "_spec": "imgopti",
-  "_where": "/root/project",
+  "name": "compressImage",
+  "version": "1.0.0",
+  "description": "compressImage",
+  "main": "src/index.js",
   "author": {
     "name": "kaivean",
     "email": "kaivean@outlook.com"
   },
-  "bin": {
-    "imgopti": "./bin/imgopti"
+  "license": "MIT",
+  "homepage": "https://github.com/kaivean/image-compress-browser#readme",
+  "readme": "ERROR: No README data found!",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/kaivean/image-compress-browser.git"
   },
-  "bugs": {
-    "url": "https://github.com/kaivean/imgopti/issues"
+  "scripts": {
+    "server": "nodemon ./measurement/server.js --watch measurement",
+    "dev": "rollup -c rollup.config.js -w",
+    "build": "rollup -c rollup.config.js",
+    "test": "karma start",
+    "release": "rollup -c rollup.config.js --environment NODE_ENV:production"
   },
-  "dependencies": {},
-  "description": "optimize images, compress, resize and so on",
   "devDependencies": {
     "ejs": "^2.5.6",
     "file-loader": "^0.10.1",
+    "jasmine": "^2.5.3",
+    "karma": "^1.6.0",
+    "karma-chrome-launcher": "^2.0.0",
+    "karma-ie-launcher": "^1.0.0",
+    "karma-jasmine": "^1.1.0",
+    "karma-safari-launcher": "^1.0.0",
     "koa": "^2.2.0",
     "koa-router": "^7.0.1",
     "koa-static": "^3.0.0",
     "nodemon": "^1.11.0",
-    "webpack": "^2.3.0"
-  },
-  "directories": {
-    "test": "test"
-  },
-  "dist": {
-    "shasum": "8bf466090e819ea88f3942babc7b0817056703b8",
-    "tarball": "https://registry.npmjs.org/imgopti/-/imgopti-0.2.6.tgz"
-  },
-  "engines": {
-    "node": ">=0.10"
-  },
-  "gitHead": "df02c08aa0b83862aff18906202ee76a03969658",
-  "homepage": "https://github.com/kaivean/imgopti#readme",
-  "keywords": [
-    "image",
-    "optimize",
-    "optimizer",
-    "compress",
-    "compression",
-    "minify",
-    "jpg",
-    "jpeg",
-    "png",
-    "gif",
-    "reduce",
-    "resize",
-    "imgopti",
-    "utility"
-  ],
-  "license": "MIT",
-  "main": "index.js",
-  "maintainers": [
-    {
-      "name": "kaivean",
-      "email": "kaivean@outlook.com"
-    }
-  ],
-  "name": "imgopti",
-  "optionalDependencies": {},
-  "readme": "ERROR: No README data found!",
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/kaivean/imgopti.git"
-  },
-  "version": "0.2.6"
+    "rollup": "^0.41.6",
+    "rollup-plugin-commonjs": "^8.0.2",
+    "rollup-plugin-node-resolve": "^3.0.0",
+    "rollup-plugin-uglify": "^1.0.1",
+    "rollup-watch": "^3.2.2"
+  }
 }
