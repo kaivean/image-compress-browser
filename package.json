@@ -1,5 +1,5 @@
 {
-  "name": "compressImage",
+  "name": "image-compress-browser",
   "version": "1.0.0",
   "description": "compress image on browser",
   "main": "src/index.js",

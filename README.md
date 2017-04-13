@@ -20,11 +20,18 @@ callback(newFile)
 
 ## Example
 
+### Using require
+
 ```
 var compressImage = require('image-compress-browser');
 compressImage(file, function (newFile) {
     console.log('file:', file.size, 'newFile', newFile.size);
 });
+```
+
+### Using compressed file
+```
+<script src="./node_modules/image-compress-browser/dist/compressImage.js"></script>
 ```
 
 ## ChangeLog
