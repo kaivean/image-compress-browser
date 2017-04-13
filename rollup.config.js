@@ -3,11 +3,13 @@ import resolve from 'rollup-plugin-node-resolve';
 import commonjs from 'rollup-plugin-commonjs';
 import uglify from 'rollup-plugin-uglify';
 
+
+
 export default {
-    entry: 'src/index.js',
+    entry: 'measurement/src/index.js',
     format: 'umd',
     moduleName: 'compressImage',
-    dest: 'dist/compressImage.js',
+    dest: 'measurement/compressImage-full.js',
     plugins: [
         resolve({
             jsnext: true,

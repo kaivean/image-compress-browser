@@ -7,15 +7,14 @@ compress image on browser
 ## Api
 compressImage(file, callback)
 
-### 参数file
+### param: file
 `File`, file comes generally from `<input type="file" />`
 
-### 参数callback
+### param: callback
 execute the callback after compressing image.
-
 callback(newFile)
 
-#### 参数newFile
+##### param: newFile
 `File`, the file compressed
 
 ## Example
@@ -32,6 +31,11 @@ compressImage(file, function (newFile) {
 ### Using compressed file
 ```
 <script src="./node_modules/image-compress-browser/dist/compressImage.js"></script>
+<script>
+compressImage(file, function (newFile) {
+    console.log('file:', file.size, 'newFile', newFile.size);
+});
+</script>
 ```
 
 ## ChangeLog

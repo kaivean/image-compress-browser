@@ -19,7 +19,7 @@
     </style>
     <script src="https://cdn.bootcss.com/zepto/1.2.0/zepto.min.js"></script>
 
-    <script src="/dist/compressImage.js"></script>
+    <script src="/measurement/compressImage-full.js"></script>
 </head>
 <body>
     <h3>第一步：选择文件</h3>
@@ -32,15 +32,16 @@
     <button  class="way btn btn-info" data-type='compressExifBlob' >压缩，Exif获取方位，输出Blob</button>
     <button  class="way btn btn-warning" data-type='compressNo' >不压缩</button>
 
-    <h5>或者对以上方式压测</h5>
+    <h5>或者对以上5种方式循环自动压测10次</h5>
     <button id="totest" class="btn" >压测</button>
 
 
-    <h3>提示：</h3>
+    <h4>过程和结果：</h4>
     <div id="click" class="bg-info" ></div>
     <div id="status" class="bg-primary" ></div>
     <div id="other" class="bg-success" ></div>
 
+    <h4>图片展示：</h4>
     <div id="before" >
         原始：<img src="" alt="">
     </div>
@@ -48,8 +49,8 @@
         最新：<img src="" alt="">
     </div>
 
-    <a  class="btn btn-success" href='/report'>查看测试数据表</a>
-
+    <h3>第三步：查看每一次测试的详细数据</h3>
+    <a  class="btn btn-success" href='/report'>查看每一次测试的详细数据</a>
 
     <script>
     function compressAndUploadImg(file, callback) {
@@ -65,7 +66,7 @@
             formData.append('image', base64OrFile);
 
             var params = {
-                url: 'https://graph.baidu.com/upload',
+                url: 'http://graph.baidu.com/upload',
                 type: 'POST',
                 timeout: 10000, // 10s
                 data: formData,
@@ -128,9 +129,10 @@
     });
 
     function start(type,cb) {
+        cb = cb || function () {};
         window.statData = {
             os: navigator.userAgent.indexOf('iPhone OS') > -1 ? 'ios': 'android',
-            phone: 'vivo、qq浏览器', //'红米note, xiaoMi浏览器',
+            phone: '浏览器', //'红米note, xiaoMi浏览器',
             upload: 0,
             fileTo: 0,
             toImg: 0,

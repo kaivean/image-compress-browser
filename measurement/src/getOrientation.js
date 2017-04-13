@@ -3,6 +3,7 @@
  * @author kaivean(kaisey2012@163.com)
  */
 
+import exif from './exif';
 
 function getStringFromDB(buffer, start, length) {
     var outstr = "";
