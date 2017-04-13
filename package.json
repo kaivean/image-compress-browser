@@ -1,7 +1,7 @@
 {
   "name": "compressImage",
   "version": "1.0.0",
-  "description": "compressImage",
+  "description": "compress image on browser",
   "main": "src/index.js",
   "author": {
     "name": "kaivean",

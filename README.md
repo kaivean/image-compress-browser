@@ -15,7 +15,7 @@ execute the callback after compressing image.
 
 callback(newFile)
 
-####参数newFile
+#### 参数newFile
 `File`, the file compressed
 
 ## Example
