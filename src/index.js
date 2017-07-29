@@ -1,5 +1,6 @@
 /**
  * @file 处理任务
+ *      代码规范说明： 仅采用rollup的import方便打包而已，没有使用es6语法，因此变量还是var
  * @author kaivean(kaisey2012@163.com)
  */
 
