@@ -12,9 +12,9 @@ export default {
         resolve({
             jsnext: true,
             main: true,
-            browser: true,
+            browser: true
         }),
         commonjs(),
-        (process.env.NODE_ENV === 'production' && uglify()),
+        // (process.env.NODE_ENV === 'production' && uglify()),
     ]
 };

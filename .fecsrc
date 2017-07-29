@@ -8,11 +8,11 @@
             "exports": true
         },
         "env": {
-            "browser": true,
-            "node": true
+            "browser": true
         },
         "rules": {
-            "no-console": false
+            "no-console": false,
+            "no-var": false
         }
     }
 

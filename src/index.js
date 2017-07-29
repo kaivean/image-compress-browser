@@ -3,10 +3,15 @@
  * @author kaivean(kaisey2012@163.com)
  */
 
-import ployFillTobBlob from './ployFillTobBlob';
+import canvasToBlob from './canvasToBlob';
 import getOrientation from './getOrientation';
 
-
+/**
+ * 把blob对象转为img对象
+ *
+ * @param {File} file 文件
+ * @param {Function} callback 回调
+ */
 function loadFileToImg(file, callback) {
     var URL = window.URL || window.webkitURL;
     var url = URL.createObjectURL(file);
@@ -17,11 +22,18 @@ function loadFileToImg(file, callback) {
     img.src = url;
 }
 
+/**
+ * 把图片化到canvas，并压缩输出成文件对象
+ *
+ * @param {Image} img 文件
+ * @param {number} orientation 方位值
+ * @param {Function} callback 回调
+ */
 function handleCanvas(img, orientation, callback) {
-    ployFillTobBlob();
-
     var width = img.naturalWidth || img.width;
     var height = img.naturalHeight || img.height;
+
+    // 如果图片原来是横向的，那么新的宽高就应该反着来，才能保持视觉不变
     if (orientation && ('5678'.indexOf(orientation) > -1)) {
         width = img.naturalHeight || img.height;
         height = img.naturalWidth || img.width;
@@ -45,6 +57,7 @@ function handleCanvas(img, orientation, callback) {
     ctx.clearRect(0, 0, width, height);
 
     ctx.save();
+    // 根据方位值，旋转canas，调整图片方位，免得显示时图片还是旋转的
     switch (orientation) {
         case 3:
             ctx.rotate(180 * Math.PI / 180);
@@ -88,16 +101,22 @@ function handleCanvas(img, orientation, callback) {
     ctx.restore();
 
     // 进行压缩, 压缩率 0.75
-    canvas.toBlob(function (newFile) {
+    canvasToBlob(canvas, function (newFile) {
         callback(newFile, width, height);
     }, 'image/jpeg', 0.75);
 }
 
-function compressImage(ofile, ocallback) {
+/**
+ * 入口： 压缩图片，
+ *
+ * @param {File} ofile 文件
+ * @param {Function} ocallback 压缩后回调
+ * @return {undefined} 提前终止而已
+ */
+export default function compressImage(ofile, ocallback) {
     var file = ofile || {};
     var callback = ocallback || function () {};
 
-    var fileType = file.type || '';
     if (file.type !== 'image/jpeg') {
         return callback(ofile);
     }
@@ -105,28 +124,32 @@ function compressImage(ofile, ocallback) {
     loadFileToImg(file, function (img) {
         if (img) {
             // 修复ios下压缩后图片显示不对
-            getOrientation(file, function (orientation) {
-                orientation = orientation || 1;
+            getOrientation(file, function (orientation = 1) {
                 if (orientation) {
                     handleCanvas(img, orientation, function (newFile, width, height) {
+                        // toBlob可能失败
+                        if (!newFile) {
+                            newFile = file;
+                        }
                         // 新图比旧图还大，就用旧图
                         var becomeLarge = file.size <= newFile.size;
                         var returnFile = newFile;
                         if (becomeLarge) {
-                            returnFile = file
+                            returnFile = file;
                         }
+                        // 把压缩file对象回传
                         callback(returnFile);
                     });
                 }
                 else {
+                    // 压缩失败，回传
                     callback(ofile);
                 }
             });
         }
         else {
+            // 压缩失败，回传
             callback(ofile);
         }
     });
 }
-
-export default compressImage;
