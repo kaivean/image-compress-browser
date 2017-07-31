@@ -3,6 +3,9 @@
  * @author kaivean(kaisey2012@163.com)
  */
 
+// 代码规范说明： 仅采用rollup的import方便打包而已，可以方便生成iife模块兼容代码，没有使用es6语法，因此变量还是var
+/* eslint-disable no-var */
+
 /**
  * canvas.toBlob的降级处理
  *
