@@ -4,7 +4,7 @@
  */
 
  /**
-  * 分析App1域，获取到方位值，此时找到app1域，方位值一般都存放这里
+  * 把二进制数据转为字符串
   *
   * @param {Buffer} buffer 文件二进制
   * @param {number} start 读取二进制的开始位
