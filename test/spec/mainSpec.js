@@ -1,3 +1,4 @@
+/* eslint-disable */
 describe("测试集", function() {
     var file ;
 

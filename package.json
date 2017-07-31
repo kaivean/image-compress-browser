@@ -15,29 +15,10 @@
     "url": "git+https://github.com/kaivean/image-compress-browser.git"
   },
   "scripts": {
-    "server": "nodemon ./measurement/server.js --watch measurement",
-    "dev": "rollup -c rollup.config.js -w",
-    "build": "rollup -c rollup.config.js",
-    "test": "karma start",
-    "release": "rollup -c rollup.config.js --environment NODE_ENV:production"
+    "build": "fis3 release -d dist",
+    "test": "karma start"
   },
   "devDependencies": {
-    "ejs": "^2.5.6",
-    "file-loader": "^0.10.1",
-    "jasmine": "^2.5.3",
-    "karma": "^1.6.0",
-    "karma-chrome-launcher": "^2.0.0",
-    "karma-ie-launcher": "^1.0.0",
-    "karma-jasmine": "^1.1.0",
-    "karma-safari-launcher": "^1.0.0",
-    "koa": "^2.2.0",
-    "koa-router": "^7.0.1",
-    "koa-static": "^3.0.0",
-    "nodemon": "^1.11.0",
-    "rollup": "^0.41.6",
-    "rollup-plugin-commonjs": "^8.0.2",
-    "rollup-plugin-node-resolve": "^3.0.0",
-    "rollup-plugin-uglify": "^1.0.1",
-    "rollup-watch": "^3.2.2"
+    "fis3": "^3.4.34"
   }
 }

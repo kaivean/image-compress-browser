@@ -4,15 +4,13 @@
 
     "eslint": {
         "globals": {
-            "module": true,
-            "exports": true
+
         },
         "env": {
             "browser": true
         },
         "rules": {
-            "no-console": false,
-            "no-var": false
+
         }
     }
 
