@@ -1,5 +1,5 @@
 /**
- * @file 处理任务
+ * @file 在浏览器实现图片压缩，解决ios上压缩后显示方向不对的问题
  * @author kaivean(kaisey2012@163.com)
  */
 
